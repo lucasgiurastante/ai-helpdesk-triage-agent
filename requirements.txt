@@ -1,0 +1,22 @@
+# AI Help Desk Triage & Remediation Agent -- dependencies
+#
+# The core runtime (agent.py, services/, policies/, data/, eval/, tests/)
+# uses the PYTHON STANDARD LIBRARY ONLY.  Installing this file installs
+# nothing: every dependency below is optional and commented out on purpose.
+#
+#   pip install -r requirements.txt     # -> installs nothing
+#
+# Requirements:
+#   * Python 3.9 or newer (developed and verified on 3.9 / 3.15)
+
+# --------------------------------------------------------------------------- #
+# Optional: only needed to talk to the real connectors (ServiceNow, Jira,
+# Microsoft Graph, Okta).  The adapters import it lazily, so the demo works
+# without it and the import error explains how to install it.
+# --------------------------------------------------------------------------- #
+# requests>=2.31.0
+
+# --------------------------------------------------------------------------- #
+# Optional: a nicer terminal report for the demo.
+# --------------------------------------------------------------------------- #
+# rich>=13.7.0

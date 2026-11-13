@@ -1,0 +1,203 @@
+{
+  "juan.perez": {
+    "active": true,
+    "locked": false,
+    "locked_by_admin": false,
+    "manager": "laura.gomez",
+    "groups": [
+      "SAP_BASIC",
+      "VPN_USERS"
+    ],
+    "vip": false,
+    "mfa_enrolled": true,
+    "identity_verified": true,
+    "password_last_set_days": 12,
+    "email": "juan.perez@rhvision.com.ar",
+    "display_name": "Juan Pérez",
+    "department": "Ventas"
+  },
+  "laura.gomez": {
+    "active": true,
+    "locked": false,
+    "locked_by_admin": false,
+    "manager": "carlos.ruiz",
+    "groups": [
+      "SAP_BASIC",
+      "MANAGERS"
+    ],
+    "vip": false,
+    "mfa_enrolled": true,
+    "identity_verified": true,
+    "password_last_set_days": 25,
+    "email": "laura.gomez@rhvision.com.ar",
+    "display_name": "Laura Gómez",
+    "department": "Ventas"
+  },
+  "carlos.ruiz": {
+    "active": true,
+    "locked": false,
+    "locked_by_admin": false,
+    "manager": null,
+    "groups": [
+      "SAP_ALL",
+      "MANAGERS",
+      "ITSM_ADMIN"
+    ],
+    "vip": false,
+    "mfa_enrolled": true,
+    "identity_verified": true,
+    "password_last_set_days": 40,
+    "email": "carlos.ruiz@rhvision.com.ar",
+    "display_name": "Carlos Ruiz",
+    "department": "TI"
+  },
+  "maria.lopez": {
+    "active": true,
+    "locked": false,
+    "locked_by_admin": false,
+    "manager": "carlos.ruiz",
+    "groups": [
+      "SAP_ALL",
+      "VPN_USERS",
+      "MANAGERS"
+    ],
+    "vip": true,
+    "mfa_enrolled": true,
+    "identity_verified": true,
+    "password_last_set_days": 15,
+    "email": "maria.lopez@rhvision.com.ar",
+    "display_name": "María López",
+    "department": "Dirección"
+  },
+  "pedro.gomez": {
+    "active": false,
+    "locked": false,
+    "locked_by_admin": false,
+    "manager": "laura.gomez",
+    "groups": [
+      "SAP_BASIC"
+    ],
+    "vip": false,
+    "mfa_enrolled": true,
+    "identity_verified": false,
+    "password_last_set_days": 180,
+    "email": "pedro.gomez@rhvision.com.ar",
+    "display_name": "Pedro Gómez",
+    "department": "Ventas"
+  },
+  "ana.silva": {
+    "active": true,
+    "locked": true,
+    "locked_by_admin": false,
+    "manager": "carlos.ruiz",
+    "groups": [
+      "VPN_USERS"
+    ],
+    "vip": false,
+    "mfa_enrolled": true,
+    "identity_verified": true,
+    "password_last_set_days": 60,
+    "email": "ana.silva@rhvision.com.ar",
+    "display_name": "Ana Silva",
+    "department": "Operaciones"
+  },
+  "luis.martinez": {
+    "active": true,
+    "locked": false,
+    "locked_by_admin": true,
+    "manager": "carlos.ruiz",
+    "groups": [
+      "SAP_BASIC",
+      "FINANCE_SHARED"
+    ],
+    "vip": false,
+    "mfa_enrolled": true,
+    "identity_verified": true,
+    "password_last_set_days": 95,
+    "email": "luis.martinez@rhvision.com.ar",
+    "display_name": "Luis Martínez",
+    "department": "Finanzas"
+  },
+  "sofia.torres": {
+    "active": true,
+    "locked": false,
+    "locked_by_admin": false,
+    "manager": "laura.gomez",
+    "groups": [
+      "OFFICE_USERS"
+    ],
+    "vip": false,
+    "mfa_enrolled": false,
+    "identity_verified": false,
+    "password_last_set_days": 30,
+    "email": "sofia.torres@rhvision.com.ar",
+    "display_name": "Sofía Torres",
+    "department": "Marketing"
+  },
+  "diego.fernandez": {
+    "active": true,
+    "locked": false,
+    "locked_by_admin": false,
+    "manager": "carlos.ruiz",
+    "groups": [
+      "FINANCE_SHARED",
+      "OFFICE_USERS"
+    ],
+    "vip": false,
+    "mfa_enrolled": true,
+    "identity_verified": true,
+    "password_last_set_days": 240,
+    "email": "diego.fernandez@rhvision.com.ar",
+    "display_name": "Diego Fernández",
+    "department": "Finanzas"
+  },
+  "rosa.martinez": {
+    "active": true,
+    "locked": false,
+    "locked_by_admin": false,
+    "manager": "laura.gomez",
+    "groups": [
+      "OFFICE_USERS"
+    ],
+    "vip": false,
+    "mfa_enrolled": true,
+    "identity_verified": true,
+    "password_last_set_days": 55,
+    "email": "rosa.martinez@rhvision.com.ar",
+    "display_name": "Rosa Martínez",
+    "department": "Operaciones"
+  },
+  "andres.lopez": {
+    "active": true,
+    "locked": false,
+    "locked_by_admin": false,
+    "manager": "laura.gomez",
+    "groups": [
+      "OFFICE_USERS"
+    ],
+    "vip": false,
+    "mfa_enrolled": true,
+    "identity_verified": false,
+    "password_last_set_days": 70,
+    "email": "andres.lopez@rhvision.com.ar",
+    "display_name": "Andrés López",
+    "department": "Marketing"
+  },
+  "vale.garcia": {
+    "active": true,
+    "locked": false,
+    "locked_by_admin": false,
+    "manager": "laura.gomez",
+    "groups": [
+      "OFFICE_USERS",
+      "VPN_USERS"
+    ],
+    "vip": false,
+    "mfa_enrolled": true,
+    "identity_verified": true,
+    "password_last_set_days": 20,
+    "email": "vale.garcia@rhvision.com.ar",
+    "display_name": "Valentina García",
+    "department": "Ventas"
+  }
+}

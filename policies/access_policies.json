@@ -1,0 +1,102 @@
+{
+  "sap-fiori-basic": {
+    "description": "Acceso base a SAP Fiori: transacciones estándar (pedidos, postings, consulta) sin roles críticos.",
+    "risk": "low",
+    "action": "grant_role",
+    "approver_role": "support_lead",
+    "requires_approval": false,
+    "sensitive": false,
+    "allowed_groups": [
+      "SAP_BASIC",
+      "OFFICE_USERS",
+      "VPN_USERS"
+    ],
+    "allowed_roles": [
+      "employee",
+      "analyst",
+      "support_lead"
+    ]
+  },
+  "finance-folder": {
+    "description": "Carpeta compartida de Finanzas: contiene información contable y de clientes.",
+    "risk": "high",
+    "action": "grant_folder_access",
+    "approver_role": "manager",
+    "requires_approval": true,
+    "sensitive": true,
+    "allowed_groups": [
+      "FINANCE_SHARED",
+      "MANAGERS"
+    ],
+    "allowed_roles": [
+      "analyst",
+      "accountant",
+      "manager"
+    ]
+  },
+  "shared-drive-team": {
+    "description": "Carpeta compartida del equipo: documentación y entregables internos.",
+    "risk": "medium",
+    "action": "grant_folder_access",
+    "approver_role": "support_lead",
+    "requires_approval": true,
+    "sensitive": false,
+    "allowed_groups": [
+      "OFFICE_USERS",
+      "MANAGERS"
+    ],
+    "allowed_roles": [
+      "employee",
+      "analyst"
+    ]
+  },
+  "vpn-access": {
+    "description": "Acceso remoto por VPN para trabajo en casa o desplazamiento.",
+    "risk": "low",
+    "action": "no_action",
+    "approver_role": "support_lead",
+    "requires_approval": false,
+    "sensitive": false,
+    "allowed_groups": [
+      "VPN_USERS",
+      "SAP_ALL",
+      "MANAGERS"
+    ],
+    "allowed_roles": [
+      "employee",
+      "analyst",
+      "support_lead"
+    ]
+  },
+  "admin-access": {
+    "description": "Privilegios administrativos de cuenta (alta/baja, roles críticos, base de datos).",
+    "risk": "critical",
+    "action": "request_access_approval",
+    "approver_role": "security",
+    "requires_approval": true,
+    "sensitive": true,
+    "allowed_groups": [
+      "SAP_ALL",
+      "ITSM_ADMIN"
+    ],
+    "allowed_roles": [
+      "admin",
+      "security"
+    ]
+  },
+  "software-license-office": {
+    "description": "Licencias de la suite de ofimática y herramientas de análisis (Office, Power BI).",
+    "risk": "medium",
+    "action": "assign_software_package",
+    "approver_role": "support_lead",
+    "requires_approval": true,
+    "sensitive": false,
+    "allowed_groups": [
+      "OFFICE_USERS"
+    ],
+    "allowed_roles": [
+      "employee",
+      "analyst"
+    ]
+  }
+}

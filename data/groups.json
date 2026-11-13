@@ -1,0 +1,82 @@
+{
+  "SAP_BASIC": {
+    "display_name": "SAP Fiori - transacciones estándar",
+    "members": [
+      "juan.perez",
+      "laura.gomez",
+      "pedro.gomez",
+      "luis.martinez",
+      "rosa.martinez",
+      "vale.garcia"
+    ],
+    "sensitive": false,
+    "owner": "TI",
+    "requires_approval": false
+  },
+  "SAP_ALL": {
+    "display_name": "SAP Fiori - acceso total (S/4HANA y Basis)",
+    "members": [
+      "maria.lopez",
+      "carlos.ruiz"
+    ],
+    "sensitive": true,
+    "owner": "TI",
+    "requires_approval": true
+  },
+  "VPN_USERS": {
+    "display_name": "Acceso remoto por VPN",
+    "members": [
+      "juan.perez",
+      "ana.silva",
+      "maria.lopez",
+      "vale.garcia"
+    ],
+    "sensitive": false,
+    "owner": "TI",
+    "requires_approval": false
+  },
+  "FINANCE_SHARED": {
+    "display_name": "Carpeta compartida de Finanzas",
+    "members": [
+      "diego.fernandez",
+      "luis.martinez",
+      "carlos.ruiz"
+    ],
+    "sensitive": true,
+    "owner": "Finanzas",
+    "requires_approval": true
+  },
+  "OFFICE_USERS": {
+    "display_name": "Licencias de ofimática y herramientas de análisis",
+    "members": [
+      "sofia.torres",
+      "rosa.martinez",
+      "andres.lopez",
+      "vale.garcia",
+      "diego.fernandez"
+    ],
+    "sensitive": false,
+    "owner": "TI",
+    "requires_approval": false
+  },
+  "ITSM_ADMIN": {
+    "display_name": "Administración de la mesa de servicios (ITSM)",
+    "members": [
+      "carlos.ruiz"
+    ],
+    "sensitive": true,
+    "owner": "TI",
+    "requires_approval": true
+  },
+  "MANAGERS": {
+    "display_name": "Jefaturas y aprobadores de accesos",
+    "members": [
+      "laura.gomez",
+      "carlos.ruiz",
+      "maria.lopez"
+    ],
+    "sensitive": false,
+    "owner": "Dirección",
+    "requires_approval": false
+  }
+}

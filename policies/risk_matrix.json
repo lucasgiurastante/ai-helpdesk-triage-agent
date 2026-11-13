@@ -1,0 +1,147 @@
+{
+  "version": "1.0",
+  "thresholds": {
+    "auto_execute_min_confidence": 0.70,
+    "review_min_confidence": 0.45
+  },
+  "levels": {
+    "low": {
+      "decision": "auto_execute",
+      "auto_execute_allowed": true,
+      "approver_role": null,
+      "timeout_minutes": 60
+    },
+    "medium": {
+      "decision": "require_approval",
+      "auto_execute_allowed": false,
+      "approver_role": "support_lead",
+      "timeout_minutes": 240
+    },
+    "high": {
+      "decision": "require_approval",
+      "auto_execute_allowed": false,
+      "approver_role": "manager",
+      "timeout_minutes": 480
+    },
+    "critical": {
+      "decision": "escalate",
+      "auto_execute_allowed": false,
+      "approver_role": "security",
+      "timeout_minutes": 60
+    }
+  },
+  "action_risk": {
+    "send_kb_article": "low",
+    "password_reset_link": "low",
+    "unlock_account": "medium",
+    "grant_role": "high",
+    "grant_folder_access": "high",
+    "request_access_approval": "high",
+    "assign_software_package": "medium",
+    "restart_service": "medium",
+    "escalate_network_team": "medium",
+    "escalate_security_team": "critical",
+    "disable_user": "critical",
+    "human_review": "medium",
+    "no_action": "low"
+  },
+  "category_overrides": {
+    "security": {
+      "priority": "P1",
+      "risk": "critical",
+      "action": "escalate_security_team"
+    }
+  },
+  "priority_matrix": {
+    "individual": {
+      "low": "P4",
+      "normal": "P3",
+      "high": "P2",
+      "critical": "P1"
+    },
+    "team": {
+      "low": "P4",
+      "normal": "P3",
+      "high": "P2",
+      "critical": "P1"
+    },
+    "department": {
+      "low": "P3",
+      "normal": "P2",
+      "high": "P1",
+      "critical": "P1"
+    },
+    "organization": {
+      "low": "P2",
+      "normal": "P1",
+      "high": "P1",
+      "critical": "P1"
+    }
+  },
+  "risk_factors": [
+    {
+      "id": "RISK-001",
+      "when": {
+        "field": "user.vip",
+        "op": "eq",
+        "value": true
+      },
+      "delta": 1,
+      "reason": "El solicitante es un usuario VIP: requiere revisión humana"
+    },
+    {
+      "id": "RISK-002",
+      "when": {
+        "field": "user.active",
+        "op": "eq",
+        "value": false
+      },
+      "delta": 1,
+      "reason": "El solicitante no está activo: revisar antes de tocar la identidad"
+    },
+    {
+      "id": "RISK-003",
+      "when": {
+        "field": "resource.sensitive",
+        "op": "eq",
+        "value": true
+      },
+      "delta": 1,
+      "reason": "El recurso solicitado es sensible"
+    },
+    {
+      "id": "RISK-004",
+      "when": {
+        "field": "confidence",
+        "op": "lt",
+        "value": 0.45
+      },
+      "delta": 1,
+      "reason": "Confianza de clasificación baja"
+    },
+    {
+      "id": "RISK-005",
+      "when": {
+        "field": "user.mfa_enrolled",
+        "op": "eq",
+        "value": false
+      },
+      "delta": 1,
+      "reason": "El solicitante no tiene MFA registrado"
+    },
+    {
+      "id": "RISK-006",
+      "when": {
+        "field": "action",
+        "op": "in",
+        "value": [
+          "grant_role",
+          "grant_folder_access",
+          "disable_user"
+        ]
+      },
+      "delta": 1,
+      "reason": "Acción de mínimo privilegio con impacto alto"
+    }
+  ]
+}

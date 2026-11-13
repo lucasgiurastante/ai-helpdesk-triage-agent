@@ -1,0 +1,13 @@
+ticket_id,requester,description,service,created_at
+TCK-001,juan.perez,"Mi cuenta bloqueada en SAP Fiori, no puedo entrar y el login dice credencial incorrecta.",SAP Fiori,2026-11-10T09:15:00Z
+TCK-002,laura.gomez,"Olvidé mi contraseña, la contraseña está vencida y el login falla, necesito restablecerla para entrar al SAP.",Account,2026-11-10T10:05:00Z
+TCK-003,diego.fernandez,"Necesito solicitar acceso a la carpeta de Finanzas para el cierre de mes, es un permiso de lectura.",Shared Drive,2026-11-10T11:20:00Z
+TCK-004,maria.lopez,"Mi laptop no enciende, la pantalla queda negra y no prende el equipo.",Hardware,2026-11-10T12:00:00Z
+TCK-005,ana.silva,"No conecta el VPN desde la oficina, el AnyConnect no tunnel y no hay conexion.",VPN,2026-11-10T13:30:00Z
+TCK-006,pedro.gomez,"No puedo acceder a SAP Fiori, el login da error y no me habilitaron el permiso del rol.",SAP Fiori,2026-11-10T14:10:00Z
+TCK-007,sofia.torres,"Recibí un correo sospechoso con phishing, hay posible malware y robo de contrasena, es urgente.",Security,2026-11-10T15:45:00Z
+TCK-008,rosa.martinez,"Necesito instalar Power BI para los reportes, tengo Excel pero no tiene instalado el paquete de Office.",Software,2026-11-11T08:10:00Z
+TCK-009,carlos.ruiz,"Queria consultarte por un tema administrativo del proyecto, no se bien donde dirigirlo.",Account,2026-11-11T09:00:00Z
+TCK-010,andres.lopez,"Tengo una regla de correo que no me deja reenviar, el correo falla en el adjunto.",Email,2026-11-11T10:30:00Z
+TCK-011,luis.martinez,"No hay internet en todo el piso, la red está caída y no puedo trabajar con los reportes.",Network,2026-11-11T11:45:00Z
+TCK-012,vale.garcia,"Necesito solicitar acceso a la carpeta compartida del equipo de ventas para revisar el reporte, es un permiso de lectura.",Shared Drive,2026-11-11T13:00:00Z

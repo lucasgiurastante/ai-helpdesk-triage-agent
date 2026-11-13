@@ -1,0 +1,159 @@
+[
+  {
+    "id": "ESC-002",
+    "name": "Security category always escalates to the security team",
+    "priority": 100,
+    "when": {
+      "field": "category",
+      "op": "eq",
+      "value": "security"
+    },
+    "effect": {
+      "decision": "escalate",
+      "queue": "security",
+      "approver_role": "security",
+      "reason": "Categoría security: el agente nunca resuelve un incidente de seguridad por su cuenta"
+    },
+    "reasons": [
+      "El ticket pertenece a la categoría security (phishing, malware, fraude): se escala al equipo de seguridad"
+    ]
+  },
+  {
+    "id": "ESC-006",
+    "name": "Network incident with area or company scope escalates to the network team",
+    "priority": 95,
+    "when": {
+      "all": [
+        {
+          "field": "category",
+          "op": "eq",
+          "value": "network"
+        },
+        {
+          "field": "impact",
+          "op": "in",
+          "value": [
+            "department",
+            "organization"
+          ]
+        }
+      ]
+    },
+    "effect": {
+      "decision": "escalate",
+      "queue": "network-team",
+      "approver_role": "on_call",
+      "reason": "Incidente de red con alcance de área o de la empresa: lo lleva el equipo de red"
+    },
+    "reasons": [
+      "Incidente de red con alcance departamental o general: se escala al equipo de red"
+    ]
+  },
+  {
+    "id": "ESC-001",
+    "name": "P1 tickets are escalated to the on-call engineer",
+    "priority": 90,
+    "when": {
+      "field": "priority",
+      "op": "eq",
+      "value": "P1"
+    },
+    "effect": {
+      "decision": "escalate",
+      "queue": "on-call",
+      "approver_role": "on_call",
+      "reason": "Prioridad P1: el ticket necesita un ingeniero de guardia"
+    },
+    "reasons": [
+      "Prioridad P1: se escala al ingeniero de guardia (on-call)"
+    ]
+  },
+  {
+    "id": "ESC-003",
+    "name": "Low classification confidence requires human review",
+    "priority": 50,
+    "when": {
+      "field": "confidence",
+      "op": "lt",
+      "value": 0.70
+    },
+    "effect": {
+      "decision": "require_approval",
+      "queue": null,
+      "approver_role": "support_lead",
+      "reason": "Confianza de clasificación por debajo de 0.70: se requiere revisión humana"
+    },
+    "reasons": [
+      "La confianza de clasificación es menor a 0.70: se requiere revisión humana antes de actuar"
+    ]
+  },
+  {
+    "id": "ESC-004",
+    "name": "VIP requesters always get a human review",
+    "priority": 45,
+    "when": {
+      "field": "user.vip",
+      "op": "eq",
+      "value": true
+    },
+    "effect": {
+      "decision": "require_approval",
+      "queue": null,
+      "approver_role": "support_lead",
+      "reason": "El solicitante es VIP: toda acción pasa por un humano"
+    },
+    "reasons": [
+      "El solicitante es un usuario VIP: la revisión la hace una persona, no el agente"
+    ]
+  },
+  {
+    "id": "ESC-007",
+    "name": "Uncertain VPN tickets require human review",
+    "priority": 40,
+    "when": {
+      "all": [
+        {
+          "field": "category",
+          "op": "eq",
+          "value": "vpn"
+        },
+        {
+          "field": "confidence",
+          "op": "lt",
+          "value": 0.50
+        }
+      ]
+    },
+    "effect": {
+      "decision": "require_approval",
+      "queue": null,
+      "approver_role": "support_lead",
+      "reason": "Incidente de VPN con confianza baja: no se reinicia el servicio a ciegas"
+    },
+    "reasons": [
+      "Incidente de VPN con confianza menor a 0.50: no se reinicia el servicio remoto sin revisión"
+    ]
+  },
+  {
+    "id": "ESC-005",
+    "name": "High and critical risk always requires approval",
+    "priority": 20,
+    "when": {
+      "field": "risk",
+      "op": "in",
+      "value": [
+        "high",
+        "critical"
+      ]
+    },
+    "effect": {
+      "decision": "require_approval",
+      "queue": null,
+      "approver_role": null,
+      "reason": "Riesgo high o critical: la acción no puede ejecutarse automáticamente"
+    },
+    "reasons": [
+      "El riesgo efectivo es high o critical: la acción necesita una aprobación humana explícita"
+    ]
+  }
+]

@@ -1,0 +1,503 @@
+[
+  {
+    "id": "KB001",
+    "title": "Cuenta bloqueada en SAP Fiori",
+    "category": "account_locked",
+    "intent": "trouble",
+    "service": "SAP Fiori",
+    "priority_hint": "P3",
+    "action": "password_reset_link",
+    "base_risk": "low",
+    "keywords": [
+      "sap",
+      "fiori",
+      "login",
+      "entrar",
+      "acceso",
+      "credencial",
+      "contrasena",
+      "password"
+    ],
+    "strong_keywords": [
+      "bloqueado",
+      "cuenta bloqueada",
+      "locked",
+      "locked out",
+      "bloqueo de cuenta"
+    ],
+    "resolution": "Confirmar la identidad del solicitante (MFA en el sistema), comprobar que la cuenta no fue bloqueada por un administrador y enviar el enlace de restablecimiento de contraseña. Si el bloqueo es administrativo, escalar al equipo de seguridad.",
+    "resolution_en": "Confirm the requester identity through MFA, verify the account was not locked by an administrator and send the password reset link. Administrative locks are escalated to the security team.",
+    "runbook": [
+      "Confirmar identidad del solicitante con MFA",
+      "Comprobar estado de bloqueo en el directorio",
+      "Enviar enlace de restablecimiento de contraseña",
+      "Documentar la acción en el ticket"
+    ],
+    "estimated_minutes": 12,
+    "resource": null,
+    "resource_patterns": []
+  },
+  {
+    "id": "KB002",
+    "title": "Contraseña olvidada o vencida",
+    "category": "password",
+    "intent": "trouble",
+    "service": "Account",
+    "priority_hint": "P3",
+    "action": "password_reset_link",
+    "base_risk": "low",
+    "keywords": [
+      "contrasena",
+      "password",
+      "login",
+      "acceso",
+      "sap"
+    ],
+    "strong_keywords": [
+      "olvide",
+      "olvido",
+      "olvidada",
+      "forgot",
+      "vencida",
+      "caducada",
+      "expired",
+      "restablecer"
+    ],
+    "resolution": "Verificar la identidad fuera de banda (MFA registrado y cuenta activa) y enviar el enlace de restablecimiento. Nunca se comparte la contraseña por el ticket: se fuerza el cambio en el primer inicio de sesión.",
+    "resolution_en": "Verify the identity out of band (enrolled MFA and active account) and send the reset link. Passwords are never shared over a ticket: the change is forced at first sign-in.",
+    "runbook": [
+      "Comprobar MFA enrolado y cuenta activa",
+      "Enviar enlace de restablecimiento",
+      "Verificar que el cambio de contraseña se completó"
+    ],
+    "estimated_minutes": 8,
+    "resource": null,
+    "resource_patterns": []
+  },
+  {
+    "id": "KB003",
+    "title": "Solicitud de acceso a carpeta compartida",
+    "category": "access",
+    "intent": "request",
+    "service": "Shared Drive",
+    "priority_hint": "P3",
+    "action": "request_access_approval",
+    "base_risk": "high",
+    "keywords": [
+      "carpeta",
+      "folder",
+      "permisos",
+      "permiso",
+      "finanzas",
+      "finance",
+      "sharepoint",
+      "drive"
+    ],
+    "strong_keywords": [
+      "solicitar acceso",
+      "permiso a",
+      "acceso a la carpeta",
+      "request access"
+    ],
+    "resolution": "Registrar la solicitud de acceso, verificar que el recurso está en la política de accesos y enviar la aprobación al responsable (manager). El alta real se ejecuta sólo después de la aprobación.",
+    "resolution_en": "Register the access request, verify the resource is in the access policy and send the approval to the manager. The actual grant runs only after the approval.",
+    "runbook": [
+      "Identificar el recurso solicitado",
+      "Validar contra la política de accesos",
+      "Derivar la aprobación al manager",
+      "Ejecutar el alta tras la aprobación"
+    ],
+    "estimated_minutes": 20,
+    "resource": "finance-folder",
+    "resource_patterns": [
+      "finanzas",
+      "carpeta de finanzas"
+    ]
+  },
+  {
+    "id": "KB004",
+    "title": "Permisos sobre carpeta compartida del equipo",
+    "category": "access",
+    "intent": "request",
+    "service": "Shared Drive",
+    "priority_hint": "P3",
+    "action": "grant_folder_access",
+    "base_risk": "high",
+    "keywords": [
+      "carpeta",
+      "permiso",
+      "escritura",
+      "lectura",
+      "drive",
+      "unidad"
+    ],
+    "strong_keywords": [
+      "carpeta compartida",
+      "shared drive",
+      "onedrive",
+      "google drive",
+      "permiso de escritura"
+    ],
+    "resolution": "Aplicar el mínimo privilegio solicitado (lectura o escritura) sobre la carpeta compartida, previa aprobación del responsable del recurso.",
+    "resolution_en": "Grant the requested minimum privilege (read or write) on the shared folder, after the resource owner approves it.",
+    "runbook": [
+      "Confirmar el permiso mínimo solicitado",
+      "Solicitar aprobación del responsable",
+      "Aplicar el permiso tras la aprobación"
+    ],
+    "estimated_minutes": 18,
+    "resource": "shared-drive-team",
+    "resource_patterns": [
+      "carpeta compartida",
+      "equipo"
+    ]
+  },
+  {
+    "id": "KB005",
+    "title": "Error de autorización en una transacción SAP",
+    "category": "access",
+    "intent": "trouble",
+    "service": "SAP Fiori",
+    "priority_hint": "P3",
+    "action": "grant_role",
+    "base_risk": "high",
+    "keywords": [
+      "acceso",
+      "error",
+      "permiso",
+      "transaction"
+    ],
+    "strong_keywords": [
+      "sap",
+      "fiori",
+      "rol",
+      "role",
+      "transaccion",
+      "t-code",
+      "sapgui",
+      "abap"
+    ],
+    "resolution": "Identificar la transacción y el rol SAPGUI necesario, comprobar que el rol no es crítico y solicitar la asignación del rol al manager del solicitante.",
+    "resolution_en": "Identify the transaction and the required SAPGUI role, check the role is not critical and request the role assignment from the requester manager.",
+    "runbook": [
+      "Identificar transacción y rol SAPGUI",
+      "Validar el rol contra la política de accesos",
+      "Escalar al manager del solicitante",
+      "Asignar el rol tras la aprobación"
+    ],
+    "estimated_minutes": 25,
+    "resource": "sap-fiori-basic",
+    "resource_patterns": [
+      "sap",
+      "fiori"
+    ]
+  },
+  {
+    "id": "KB006",
+    "title": "Caída de red o de WiFi en un piso",
+    "category": "network",
+    "intent": "trouble",
+    "service": "Network",
+    "priority_hint": "P1",
+    "action": "escalate_network_team",
+    "base_risk": "medium",
+    "keywords": [
+      "internet",
+      "red",
+      "network",
+      "wifi",
+      "piso",
+      "conexion",
+      "problema",
+      "planta"
+    ],
+    "strong_keywords": [
+      "sin internet",
+      "no hay internet",
+      "caido",
+      "caida",
+      "outage",
+      "dns",
+      "sin conexion",
+      "red caida"
+    ],
+    "resolution": "Recolectar evidencia (ping al gateway, resolución DNS, estado del switch) y escalar al equipo de red. Con alcance departamental o general el ticket va directamente a la cola network-team.",
+    "resolution_en": "Collect evidence (gateway ping, DNS resolution, switch status) and escalate to the network team. Department or company scope routes straight to the network-team queue.",
+    "runbook": [
+      "Verificar alcance del incidente",
+      "Recolectar evidencia de red",
+      "Escalar al equipo de red con la evidencia"
+    ],
+    "estimated_minutes": 35,
+    "resource": null,
+    "resource_patterns": []
+  },
+  {
+    "id": "KB007",
+    "title": "El cliente VPN no conecta",
+    "category": "vpn",
+    "intent": "trouble",
+    "service": "VPN",
+    "priority_hint": "P2",
+    "action": "restart_service",
+    "base_risk": "medium",
+    "keywords": [
+      "conexion",
+      "remoto",
+      "remote",
+      "acceso",
+      "oficina"
+    ],
+    "strong_keywords": [
+      "vpn",
+      "anyconnect",
+      "noclient",
+      "tunel",
+      "tunnel",
+      "no conecta"
+    ],
+    "resolution": "Verificar versión del cliente, credenciales y estado del servicio de acceso remoto. Reiniciar el servicio VPN cuando la confianza en el diagnóstico sea alta; en caso contrario se escala para revisión humana.",
+    "resolution_en": "Check the client version, the credentials and the remote access service status. Restart the VPN service when the diagnosis is confident enough; otherwise escalate for human review.",
+    "runbook": [
+      "Validar versión del cliente VPN",
+      "Comprobar estado del servicio de acceso remoto",
+      "Reiniciar servicio o escalar si la confianza es baja"
+    ],
+    "estimated_minutes": 22,
+    "resource": "vpn-access",
+    "resource_patterns": [
+      "vpn",
+      "anyconnect"
+    ]
+  },
+  {
+    "id": "KB008",
+    "title": "Instalación de software y licencias",
+    "category": "software",
+    "intent": "request",
+    "service": "Software",
+    "priority_hint": "P4",
+    "action": "assign_software_package",
+    "base_risk": "medium",
+    "keywords": [
+      "software",
+      "aplicacion",
+      "programa",
+      "excel",
+      "teams",
+      "office"
+    ],
+    "strong_keywords": [
+      "instalar",
+      "instalacion",
+      "power bi",
+      "licencia",
+      "license",
+      "no tiene instalado"
+    ],
+    "resolution": "Comprobar la licencia disponible para el rol del solicitante y asignar el paquete de software. La asignación requiere la aprobación del support lead.",
+    "resolution_en": "Check the licence available for the requester role and assign the software package. The assignment requires the support lead approval.",
+    "runbook": [
+      "Validar licencia según rol y grupo",
+      "Solicitar aprobación del support lead",
+      "Asignar el paquete de software"
+    ],
+    "estimated_minutes": 15,
+    "resource": "software-license-office",
+    "resource_patterns": [
+      "office",
+      "power bi",
+      "excel"
+    ]
+  },
+  {
+    "id": "KB009",
+    "title": "Hardware: el equipo no enciende",
+    "category": "hardware",
+    "intent": "trouble",
+    "service": "Hardware",
+    "priority_hint": "P4",
+    "action": "send_kb_article",
+    "base_risk": "low",
+    "keywords": [
+      "laptop",
+      "notebook",
+      "pc",
+      "monitor",
+      "impresora",
+      "printer",
+      "teclado",
+      "mouse",
+      "pantalla",
+      "telefono"
+    ],
+    "strong_keywords": [
+      "no enciende",
+      "pantalla negra",
+      "teclado roto",
+      "bateria",
+      "no prende"
+    ],
+    "resolution": "Enviar el artículo de soporte con el procedure de diagnóstico por hardware (ciclo de energía, comprobación de fuente, apertura de ticket de reemplazo).",
+    "resolution_en": "Send the support article with the hardware diagnostic procedure (power cycle, power supply check, replacement ticket).",
+    "runbook": [
+      "Enviar el artículo de KB al solicitante",
+      "Solicitar video o descripción del síntoma",
+      "Abrir ticket de reemplazo si aplica"
+    ],
+    "estimated_minutes": 10,
+    "resource": null,
+    "resource_patterns": []
+  },
+  {
+    "id": "KB010",
+    "title": "Cliente de correo: reglas, adjuntos y firma",
+    "category": "email",
+    "intent": "trouble",
+    "service": "Email",
+    "priority_hint": "P3",
+    "action": "send_kb_article",
+    "base_risk": "low",
+    "keywords": [
+      "correo",
+      "email",
+      "mail",
+      "bandeja",
+      "adjunto",
+      "calendario",
+      "reunion",
+      "invite"
+    ],
+    "strong_keywords": [
+      "outlook",
+      "thunderbird",
+      "firma",
+      "regla de correo",
+      "adjuntar archivo",
+      "adjuntos no"
+    ],
+    "resolution": "Enviar el artículo de soporte del cliente de correo con los pasos de verificación de la configuración (reglas, plantillas de firma, permisos de adjuntos).",
+    "resolution_en": "Send the mail client support article with the configuration checks (rules, signature templates, attachment permissions).",
+    "runbook": [
+      "Enviar el artículo de KB",
+      "Verificar configuración del cliente",
+      "Escalar a L2 si persiste"
+    ],
+    "estimated_minutes": 10,
+    "resource": null,
+    "resource_patterns": []
+  },
+  {
+    "id": "KB011",
+    "title": "Sospecha de phishing, malware o fraude",
+    "category": "security",
+    "intent": "trouble",
+    "service": "Security",
+    "priority_hint": "P1",
+    "action": "escalate_security_team",
+    "base_risk": "critical",
+    "keywords": [
+      "seguridad",
+      "correo",
+      "email",
+      "sospechoso",
+      "urgente",
+      "hack"
+    ],
+    "strong_keywords": [
+      "phishing",
+      "malware",
+      "virus",
+      "fraude",
+      "scam",
+      "robo de contrasena",
+      "hackeo",
+      "correo sospechoso"
+    ],
+    "resolution": "No resolver el ticket de forma automática: escalar a la cola security con el mensaje original, el remitente y los indicadores detectados. El agente no procesa adjuntos ni URLs del ticket.",
+    "resolution_en": "Never resolve a security ticket automatically: escalate to the security queue with the original message, the sender and the detected indicators. The agent does not process attachments or URLs from the ticket.",
+    "runbook": [
+      "Preservar el mensaje y sus cabeceras",
+      "Escalar a la cola security",
+      "No ejecutar ninguna acción de remediación automática"
+    ],
+    "estimated_minutes": 30,
+    "resource": null,
+    "resource_patterns": []
+  },
+  {
+    "id": "KB012",
+    "title": "Baja o desactivación de cuenta",
+    "category": "access",
+    "intent": "trouble",
+    "service": "Account",
+    "priority_hint": "P3",
+    "action": "disable_user",
+    "base_risk": "critical",
+    "keywords": [
+      "inactivo",
+      "desactivar",
+      "acceso",
+      "usuario",
+      "cuenta",
+      "no usa"
+    ],
+    "strong_keywords": [
+      "cuenta inactiva",
+      "offboarding",
+      "desactivar",
+      "disable",
+      "baja de usuario"
+    ],
+    "resolution": "La baja o desactivación de una cuenta sólo se ejecuta con la aprobación del equipo de seguridad. El agente prepara el caso, valida el estado de identidad y escala.",
+    "resolution_en": "An account deactivation is only executed with the security team approval. The agent prepares the case, validates the identity state and escalates.",
+    "runbook": [
+      "Confirmar que la cuenta no tiene actividad",
+      "Escalar al equipo de seguridad",
+      "Desactivar sólo tras la aprobación"
+    ],
+    "estimated_minutes": 30,
+    "resource": "admin-access",
+    "resource_patterns": [
+      "cuenta inactiva",
+      "offboarding"
+    ]
+  },
+  {
+    "id": "KB013",
+    "title": "Cuenta bloqueada por intentos fallidos: desbloqueo",
+    "category": "account_locked",
+    "intent": "trouble",
+    "service": "Account",
+    "priority_hint": "P3",
+    "action": "unlock_account",
+    "base_risk": "medium",
+    "keywords": [
+      "desbloquear",
+      "desbloqueo",
+      "unlock",
+      "reactivar",
+      "reactivar cuenta",
+      "account unlock"
+    ],
+    "strong_keywords": [
+      "desbloquear",
+      "desbloqueo",
+      "desbloquear usuario",
+      "desbloquear cuenta",
+      "unlock account",
+      "reactivar cuenta"
+    ],
+    "resolution": "Verificar la identidad del solicitante, comprobar el motivo del bloqueo en el directorio y desbloquear la cuenta. Si el bloqueo fue aplicado por un administrador, escalar a seguridad en lugar de desbloquear.",
+    "resolution_en": "Verify the requester identity, check the lock reason in the directory and unlock the account. If the lock was applied by an administrator, escalate to security instead of unlocking.",
+    "runbook": [
+      "Verificar identidad del solicitante con MFA",
+      "Comprobar el motivo del bloqueo en el directorio",
+      "Desbloquear la cuenta si no es un bloqueo administrativo",
+      "Documentar la acción en el ticket"
+    ],
+    "estimated_minutes": 10,
+    "resource": null,
+    "resource_patterns": []
+  }
+]

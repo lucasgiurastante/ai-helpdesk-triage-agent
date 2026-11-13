@@ -1,0 +1,662 @@
+{
+  "version": "1.0",
+  "generated_at": "2026-11-12T00:00:00Z",
+  "description": "Labelled evaluation set of the AI Help Desk triage agent. Every ticket carries the expected category, intent, priority, risk, action and decision, plus the identity context (user_profile) of the scenario. The texts are paraphrases written against the normative knowledge base (KB001..KB012) and never copy data/tickets.csv. The requesters are real users of data/users.json and the user_profile of each ticket matches their directory entry, so the harness resolves the identity for the 27 tickets and applies the scenario flags on top of it (the report states the identity source of every ticket).",
+  "composition": {
+    "account_locked": 4,
+    "password": 3,
+    "access": 4,
+    "network": 3,
+    "vpn": 2,
+    "software": 3,
+    "hardware": 2,
+    "email": 2,
+    "security": 3,
+    "unknown": 2,
+    "total": 28
+  },
+  "tickets": [
+    {
+      "ticket_id": "EVAL-001",
+      "description": "En SAP Fiori mi login y mi credencial de acceso estan bloqueados y aparece el mensaje de cuenta bloqueada",
+      "requester": "ana.silva",
+      "service": "SAP Fiori",
+      "expected": {
+        "category": "account_locked",
+        "intent": "trouble",
+        "priority": "P3",
+        "risk": "low",
+        "action": "password_reset_link",
+        "decision": "auto_execute"
+      },
+      "user_profile": {
+        "active": true,
+        "locked": true,
+        "locked_by_admin": false,
+        "vip": false,
+        "mfa_enrolled": true,
+        "identity_verified": true
+      },
+      "notes": "KB001 - strong match on 'bloqueado' and 'cuenta bloqueada'; high confidence, low risk action, no risk factor -> auto_execute (the requester is locked in the directory)"
+    },
+    {
+      "ticket_id": "EVAL-002",
+      "description": "La cuenta bloqueada de mi usuario no me deja entrar a SAP Fiori, el login muestra locked y necesito la credencial",
+      "requester": "juan.perez",
+      "service": "SAP Fiori",
+      "expected": {
+        "category": "account_locked",
+        "intent": "trouble",
+        "priority": "P3",
+        "risk": "low",
+        "action": "password_reset_link",
+        "decision": "auto_execute"
+      },
+      "user_profile": {
+        "active": true,
+        "locked": false,
+        "locked_by_admin": false,
+        "vip": false,
+        "mfa_enrolled": true,
+        "identity_verified": true
+      },
+      "notes": "KB001 - two strong keywords ('cuenta bloqueada', 'locked'); the request verb 'necesito' loses against the trouble verb 'bloqueada'"
+    },
+    {
+      "ticket_id": "EVAL-003",
+      "description": "El acceso a SAP Fiori esta bloqueado, mi credencial y login no funcionan y la cuenta bloqueada no deja entrar",
+      "requester": "sofia.torres",
+      "service": "SAP Fiori",
+      "expected": {
+        "category": "account_locked",
+        "intent": "trouble",
+        "priority": "P3",
+        "risk": "medium",
+        "action": "password_reset_link",
+        "decision": "require_approval"
+      },
+      "user_profile": {
+        "active": true,
+        "locked": false,
+        "locked_by_admin": false,
+        "vip": false,
+        "mfa_enrolled": false,
+        "identity_verified": false
+      },
+      "notes": "KB001 but the requester has no MFA in the directory -> RISK-005 raises the risk to medium -> support_lead approval"
+    },
+    {
+      "ticket_id": "EVAL-004",
+      "description": "Olvide la contrasena y el acceso de mi cuenta SAP, el login y el password no me dejan entrar y necesito restablecer la contrasena",
+      "requester": "diego.fernandez",
+      "service": "Account",
+      "expected": {
+        "category": "password",
+        "intent": "trouble",
+        "priority": "P3",
+        "risk": "low",
+        "action": "password_reset_link",
+        "decision": "auto_execute"
+      },
+      "user_profile": {
+        "active": true,
+        "locked": false,
+        "locked_by_admin": false,
+        "vip": false,
+        "mfa_enrolled": true,
+        "identity_verified": true
+      },
+      "notes": "KB002 - strong 'olvide' + 'restablecer' and five weak keywords -> high confidence -> auto_execute"
+    },
+    {
+      "ticket_id": "EVAL-005",
+      "description": "La contrasena de mi usuario SAP esta caducada, el login y el password se rechazan y hay que restablecer el acceso",
+      "requester": "rosa.martinez",
+      "service": "Account",
+      "expected": {
+        "category": "password",
+        "intent": "trouble",
+        "priority": "P3",
+        "risk": "low",
+        "action": "password_reset_link",
+        "decision": "auto_execute"
+      },
+      "user_profile": {
+        "active": true,
+        "locked": false,
+        "locked_by_admin": false,
+        "vip": false,
+        "mfa_enrolled": true,
+        "identity_verified": true
+      },
+      "notes": "KB002 - strong 'caducada' + 'restablecer' -> auto_execute"
+    },
+    {
+      "ticket_id": "EVAL-006",
+      "description": "Olvido la contrasena de SAP y el acceso se rechaza",
+      "requester": "andres.lopez",
+      "service": "Account",
+      "expected": {
+        "category": "password",
+        "intent": "trouble",
+        "priority": "P3",
+        "risk": "low",
+        "action": "password_reset_link",
+        "decision": "require_approval"
+      },
+      "user_profile": {
+        "active": true,
+        "locked": false,
+        "locked_by_admin": false,
+        "vip": false,
+        "mfa_enrolled": true,
+        "identity_verified": false
+      },
+      "notes": "KB002 with a thin match: confidence lands between 0.45 and 0.70 -> ESC-003 -> support_lead approval instead of auto execution"
+    },
+    {
+      "ticket_id": "EVAL-007",
+      "description": "Solicito permiso de acceso a la carpeta de Finanzas, es un permiso de lectura para el sharepoint",
+      "requester": "vale.garcia",
+      "service": "Shared Drive",
+      "expected": {
+        "category": "access",
+        "intent": "request",
+        "priority": "P3",
+        "risk": "critical",
+        "action": "request_access_approval",
+        "decision": "escalate"
+      },
+      "user_profile": {
+        "active": true,
+        "locked": false,
+        "locked_by_admin": false,
+        "vip": false,
+        "mfa_enrolled": true,
+        "identity_verified": true
+      },
+      "notes": "KB003 - request_access_approval is high risk and KB003 targets the sensitive finance-folder, so RISK-003 raises it to critical -> never auto executed, it is escalated to the security queue"
+    },
+    {
+      "ticket_id": "EVAL-008",
+      "description": "Solicito permiso de escritura en una carpeta compartida del drive de la empresa",
+      "requester": "carlos.ruiz",
+      "service": "Shared Drive",
+      "expected": {
+        "category": "access",
+        "intent": "request",
+        "priority": "P3",
+        "risk": "critical",
+        "action": "grant_folder_access",
+        "decision": "escalate"
+      },
+      "user_profile": {
+        "active": true,
+        "locked": false,
+        "locked_by_admin": false,
+        "vip": false,
+        "mfa_enrolled": true,
+        "identity_verified": true
+      },
+      "notes": "KB004 - grant_folder_access plus RISK-006 (least privilege with high impact) -> critical -> escalate to security"
+    },
+    {
+      "ticket_id": "EVAL-009",
+      "description": "Al abrir la transaccion en SAP Fiori aparece un error de permiso y no me deja ver la transaccion Z_FI",
+      "requester": "luis.martinez",
+      "service": "SAP Fiori",
+      "expected": {
+        "category": "access",
+        "intent": "trouble",
+        "priority": "P3",
+        "risk": "critical",
+        "action": "grant_role",
+        "decision": "escalate"
+      },
+      "user_profile": {
+        "active": true,
+        "locked": false,
+        "locked_by_admin": true,
+        "vip": false,
+        "mfa_enrolled": true,
+        "identity_verified": true
+      },
+      "notes": "KB005 - grant_role plus RISK-006 -> critical -> escalate; the requester is locked by an administrator in the directory"
+    },
+    {
+      "ticket_id": "EVAL-010",
+      "description": "Solicito el offboarding de un usuario de finanzas, la cuenta esta inactiva, hay que desactivar el acceso y aparece un error",
+      "requester": "laura.gomez",
+      "service": "Account",
+      "expected": {
+        "category": "access",
+        "intent": "trouble",
+        "priority": "P3",
+        "risk": "critical",
+        "action": "disable_user",
+        "decision": "escalate"
+      },
+      "user_profile": {
+        "active": true,
+        "locked": false,
+        "locked_by_admin": false,
+        "vip": false,
+        "mfa_enrolled": true,
+        "identity_verified": true
+      },
+      "notes": "KB012 - disable_user is critical by definition -> never auto executed, always escalated"
+    },
+    {
+      "ticket_id": "EVAL-011",
+      "description": "En el piso 3 no hay internet, la red esta caida y hay un problema de conexion en toda la planta",
+      "requester": "juan.perez",
+      "service": "Network",
+      "expected": {
+        "category": "network",
+        "intent": "trouble",
+        "priority": "P1",
+        "risk": "medium",
+        "action": "escalate_network_team",
+        "decision": "escalate"
+      },
+      "user_profile": {
+        "active": true,
+        "locked": false,
+        "locked_by_admin": false,
+        "vip": false,
+        "mfa_enrolled": true,
+        "identity_verified": true
+      },
+      "notes": "KB006 - P1 priority hint -> ESC-001 escalate to on-call"
+    },
+    {
+      "ticket_id": "EVAL-012",
+      "description": "Sin internet en todo el piso, hay un outage de DNS y la red no tiene conexion",
+      "requester": "carlos.ruiz",
+      "service": "Network",
+      "expected": {
+        "category": "network",
+        "intent": "trouble",
+        "priority": "P1",
+        "risk": "medium",
+        "action": "escalate_network_team",
+        "decision": "escalate"
+      },
+      "user_profile": {
+        "active": true,
+        "locked": false,
+        "locked_by_admin": false,
+        "vip": false,
+        "mfa_enrolled": true,
+        "identity_verified": true
+      },
+      "notes": "KB006 - department scope ('todo el piso') plus P1 hint -> escalate"
+    },
+    {
+      "ticket_id": "EVAL-013",
+      "description": "Cayo el switch principal en la sede, no hay internet para toda la empresa, la red esta caida y no hay conexion en la planta",
+      "requester": "laura.gomez",
+      "service": "Network",
+      "expected": {
+        "category": "network",
+        "intent": "trouble",
+        "priority": "P1",
+        "risk": "medium",
+        "action": "escalate_network_team",
+        "decision": "escalate"
+      },
+      "user_profile": {
+        "active": true,
+        "locked": false,
+        "locked_by_admin": false,
+        "vip": false,
+        "mfa_enrolled": true,
+        "identity_verified": true
+      },
+      "notes": "KB006 - organisation scope ('toda la empresa') -> ESC-006 escalate to the network team"
+    },
+    {
+      "ticket_id": "EVAL-014",
+      "description": "El VPN no conecta desde casa, AnyConnect da error de tunel y no tengo conexion remota",
+      "requester": "diego.fernandez",
+      "service": "VPN",
+      "expected": {
+        "category": "vpn",
+        "intent": "trouble",
+        "priority": "P2",
+        "risk": "medium",
+        "action": "restart_service",
+        "decision": "require_approval"
+      },
+      "user_profile": {
+        "active": true,
+        "locked": false,
+        "locked_by_admin": false,
+        "vip": false,
+        "mfa_enrolled": true,
+        "identity_verified": true
+      },
+      "notes": "KB007 - P2 hint wins over the impact/urgency matrix; restart_service is medium risk -> support_lead approval"
+    },
+    {
+      "ticket_id": "EVAL-015",
+      "description": "El VPN no conecta desde la oficina, el tunel falla y AnyConnect se queda cargando",
+      "requester": "maria.lopez",
+      "service": "VPN",
+      "expected": {
+        "category": "vpn",
+        "intent": "trouble",
+        "priority": "P2",
+        "risk": "high",
+        "action": "restart_service",
+        "decision": "require_approval"
+      },
+      "user_profile": {
+        "active": true,
+        "locked": false,
+        "locked_by_admin": false,
+        "vip": true,
+        "mfa_enrolled": true,
+        "identity_verified": true
+      },
+      "notes": "KB007 for a VIP requester -> RISK-001 raises medium to high -> manager approval (ESC-004 also applies)"
+    },
+    {
+      "ticket_id": "EVAL-016",
+      "description": "Solicito instalar Excel y Power BI en mi laptop, no tiene instalado el software de office",
+      "requester": "vale.garcia",
+      "service": "Software",
+      "expected": {
+        "category": "software",
+        "intent": "request",
+        "priority": "P3",
+        "risk": "medium",
+        "action": "assign_software_package",
+        "decision": "require_approval"
+      },
+      "user_profile": {
+        "active": true,
+        "locked": false,
+        "locked_by_admin": false,
+        "vip": false,
+        "mfa_enrolled": true,
+        "identity_verified": true
+      },
+      "notes": "KB008 - P4 hint but the impact/urgency matrix gives P3; package assignment is medium risk -> support_lead approval"
+    },
+    {
+      "ticket_id": "EVAL-017",
+      "description": "Necesito que me asignen la licencia de Teams, el deadline me bloquea y no tengo la aplicacion de office",
+      "requester": "andres.lopez",
+      "service": "Software",
+      "expected": {
+        "category": "software",
+        "intent": "request",
+        "priority": "P2",
+        "risk": "medium",
+        "action": "assign_software_package",
+        "decision": "require_approval"
+      },
+      "user_profile": {
+        "active": true,
+        "locked": false,
+        "locked_by_admin": false,
+        "vip": false,
+        "mfa_enrolled": true,
+        "identity_verified": false
+      },
+      "notes": "KB008 with high urgency ('deadline', 'me bloquea') -> P2 through the impact/urgency matrix"
+    },
+    {
+      "ticket_id": "EVAL-018",
+      "description": "El programa de excel no responde, necesito que reinstales la aplicacion y la licencia",
+      "requester": "rosa.martinez",
+      "service": "Software",
+      "expected": {
+        "category": "software",
+        "intent": "request",
+        "priority": "P3",
+        "risk": "medium",
+        "action": "assign_software_package",
+        "decision": "require_approval"
+      },
+      "user_profile": {
+        "active": true,
+        "locked": false,
+        "locked_by_admin": false,
+        "vip": false,
+        "mfa_enrolled": true,
+        "identity_verified": true
+      },
+      "notes": "KB008 - medium confidence but the risk alone already forces an approval"
+    },
+    {
+      "ticket_id": "EVAL-019",
+      "description": "Mi laptop no enciende y muestra pantalla negra, el teclado, el mouse y el monitor del pc tampoco funcionan",
+      "requester": "juan.perez",
+      "service": "Hardware",
+      "expected": {
+        "category": "hardware",
+        "intent": "trouble",
+        "priority": "P3",
+        "risk": "low",
+        "action": "send_kb_article",
+        "decision": "auto_execute"
+      },
+      "user_profile": {
+        "active": true,
+        "locked": false,
+        "locked_by_admin": false,
+        "vip": false,
+        "mfa_enrolled": true,
+        "identity_verified": true
+      },
+      "notes": "KB009 - two strong keywords ('no enciende', 'pantalla negra') -> high confidence, low risk -> auto_execute"
+    },
+    {
+      "ticket_id": "EVAL-020",
+      "description": "El monitor no prende y la impresora no imprime, el teclado del pc esta roto y el mouse no responde",
+      "requester": "pedro.gomez",
+      "service": "Hardware",
+      "expected": {
+        "category": "hardware",
+        "intent": "trouble",
+        "priority": "P3",
+        "risk": "medium",
+        "action": "send_kb_article",
+        "decision": "require_approval"
+      },
+      "user_profile": {
+        "active": false,
+        "locked": false,
+        "locked_by_admin": false,
+        "vip": false,
+        "mfa_enrolled": true,
+        "identity_verified": false
+      },
+      "notes": "KB009 for a requester that is inactive in the directory -> RISK-002 raises the risk from low to medium -> support_lead approval (in the full pipeline the agent would force human_review)"
+    },
+    {
+      "ticket_id": "EVAL-021",
+      "description": "En outlook no me deja adjuntar archivo, la firma no sale en el correo y el mail llega a la bandeja sin adjunto",
+      "requester": "andres.lopez",
+      "service": "Email",
+      "expected": {
+        "category": "email",
+        "intent": "trouble",
+        "priority": "P3",
+        "risk": "low",
+        "action": "send_kb_article",
+        "decision": "auto_execute"
+      },
+      "user_profile": {
+        "active": true,
+        "locked": false,
+        "locked_by_admin": false,
+        "vip": false,
+        "mfa_enrolled": true,
+        "identity_verified": false
+      },
+      "notes": "KB010 - three strong keywords ('outlook', 'adjuntar archivo', 'firma') -> high confidence -> auto_execute"
+    },
+    {
+      "ticket_id": "EVAL-022",
+      "description": "Thunderbird no puede firmar los correos, la regla de correo no funciona y hay que adjuntar archivo",
+      "requester": "maria.lopez",
+      "service": "Email",
+      "expected": {
+        "category": "email",
+        "intent": "trouble",
+        "priority": "P3",
+        "risk": "medium",
+        "action": "send_kb_article",
+        "decision": "require_approval"
+      },
+      "user_profile": {
+        "active": true,
+        "locked": false,
+        "locked_by_admin": false,
+        "vip": true,
+        "mfa_enrolled": true,
+        "identity_verified": true
+      },
+      "notes": "KB010 for a VIP requester -> RISK-001 raises low to medium -> support_lead approval (ESC-004)"
+    },
+    {
+      "ticket_id": "EVAL-023",
+      "description": "Recibí un phishing con un virus: el correo sospechoso dice que hay que restablecer tu contrasena de SAP",
+      "requester": "juan.perez",
+      "service": "Security",
+      "expected": {
+        "category": "security",
+        "intent": "trouble",
+        "priority": "P1",
+        "risk": "critical",
+        "action": "escalate_security_team",
+        "decision": "escalate"
+      },
+      "user_profile": {
+        "active": true,
+        "locked": false,
+        "locked_by_admin": false,
+        "vip": false,
+        "mfa_enrolled": true,
+        "identity_verified": true
+      },
+      "notes": "KB011 - category override sets P1/critical and the action escalate_security_team -> ESC-002"
+    },
+    {
+      "ticket_id": "EVAL-024",
+      "description": "Posible fraude por mail: me piden datos de mi tarjeta, es un hackeo urgente y el correo es sospechoso",
+      "requester": "laura.gomez",
+      "service": "Security",
+      "expected": {
+        "category": "security",
+        "intent": "trouble",
+        "priority": "P1",
+        "risk": "critical",
+        "action": "escalate_security_team",
+        "decision": "escalate"
+      },
+      "user_profile": {
+        "active": true,
+        "locked": false,
+        "locked_by_admin": false,
+        "vip": false,
+        "mfa_enrolled": true,
+        "identity_verified": true
+      },
+      "notes": "KB011 - fraud and hack are strong keywords -> critical -> escalate"
+    },
+    {
+      "ticket_id": "EVAL-025",
+      "description": "Recibimos un mail con malware y virus, es urgente, el correo es sospechoso y hay que avisar al area de seguridad",
+      "requester": "carlos.ruiz",
+      "service": "Security",
+      "expected": {
+        "category": "security",
+        "intent": "trouble",
+        "priority": "P1",
+        "risk": "critical",
+        "action": "escalate_security_team",
+        "decision": "escalate"
+      },
+      "user_profile": {
+        "active": true,
+        "locked": false,
+        "locked_by_admin": false,
+        "vip": false,
+        "mfa_enrolled": true,
+        "identity_verified": true
+      },
+      "notes": "KB011 - malware and virus are strong keywords -> critical -> escalate"
+    },
+    {
+      "ticket_id": "EVAL-026",
+      "description": "Hola, consulto sobre el sistema, gracias",
+      "requester": "vale.garcia",
+      "service": "Account",
+      "expected": {
+        "category": "unknown",
+        "priority": "P3",
+        "risk": "high",
+        "action": "human_review",
+        "decision": "require_approval"
+      },
+      "user_profile": {
+        "active": true,
+        "locked": false,
+        "locked_by_admin": false,
+        "vip": false,
+        "mfa_enrolled": true,
+        "identity_verified": true
+      },
+      "notes": "No knowledge base signal -> confidence 0.0 -> RISK-004 raises the risk from medium to high -> category unknown, action human_review, support_lead approval"
+    },
+    {
+      "ticket_id": "EVAL-027",
+      "description": "Consulta sobre el horario de la cafeteria y los espacios de la oficina",
+      "requester": "rosa.martinez",
+      "service": "Account",
+      "expected": {
+        "category": "unknown",
+        "priority": "P3",
+        "risk": "high",
+        "action": "human_review",
+        "decision": "require_approval"
+      },
+      "user_profile": {
+        "active": true,
+        "locked": false,
+        "locked_by_admin": false,
+        "vip": false,
+        "mfa_enrolled": true,
+        "identity_verified": true
+      },
+      "notes": "A single weak keyword match ('oficina') stays well below the review threshold -> confidence 0.25 -> RISK-004 raises the risk to high -> unknown -> human_review"
+    },
+    {
+      "ticket_id": "EVAL-028",
+      "description": "Solicito desbloquear mi cuenta porque fue bloqueada por demasiados intentos fallidos de login",
+      "requester": "ana.silva",
+      "service": "Account",
+      "expected": {
+        "category": "account_locked",
+        "intent": "trouble",
+        "priority": "P3",
+        "risk": "medium",
+        "action": "unlock_account",
+        "decision": "require_approval"
+      },
+      "user_profile": {
+        "active": true,
+        "locked": true,
+        "locked_by_admin": false,
+        "vip": false,
+        "mfa_enrolled": true,
+        "identity_verified": true
+      },
+      "notes": "KB013 - account locked by failed login attempts (not by an administrator); unlock_account is a medium-risk action -> require_approval with support_lead. Contrasts with EVAL-001: same user, same lock, but a different root cause and therefore a different action (unlock, not password reset)."
+    }
+  ]
+}
