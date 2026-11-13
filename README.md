@@ -246,10 +246,10 @@ Las cuatro métricas dan **1.00** y hay que explicarlo con honestidad:
   usuarios reales es más ruidoso, la KB está incompleta por definición y las políticas
   cambian con el negocio. La métrica honesta de partida no es la accuracy de
   clasificación sino el **deflection rate** y el **FCR** medidos sobre tickets reales.
-- Lo que sí demuestra el 1.00 es lo que importa para una entrevista de ingeniería: que el
-  *contrato* entre triage, identidad y política se cumple de punta a punta, que las
-  decisiones son deterministas y reproducibles, y que **cualquier cambio de KB, regla o
-  umbral que rompa el contrato se detecta en el CI con un gate que falla** (exit code 1).
+- Lo que sí demuestra el 1.00 es que el *contrato* entre triage, identidad y política se
+  cumple de punta a punta y que las decisiones son deterministas y reproducibles. El
+  script `eval/run_eval.py` aplica los umbrales localmente y devuelve exit code 1 si falla.
+  Este repositorio todavía no incluye un workflow de CI.
 - Para que el número sea creíble con datos reales: etiquetar tickets históricos de
   producción, correr este mismo harness sobre ellos, revisar los fallos caso por caso,
   y versionar la KB y las reglas en cada cambio. Ese es el paso siguiente, no algo que
@@ -281,8 +281,8 @@ Cinco pasos concretos, en orden:
    Sentinel); `outputs/metrics.json` a Prometheus/Datadog (deflection rate, MTTR,
    escalado por cola, tasa de fallo de acciones). El `run_id` correlaciona todo.
 5. **Evaluación continua** — el set etiquetado (`eval/labeled_tickets.json`) es un
-   **contrato**: cada cambio de KB, de política o de modelo se mide contra él, con gate
-   en CI. Un ticket real nuevo se etiqueta y entra al set.
+   **contrato**: cada cambio de KB, de política o de modelo puede medirse contra él con
+   `python3 eval/run_eval.py`. Un workflow de CI para automatizar ese gate queda pendiente.
 
 Detalle técnico en [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md).
 
@@ -338,6 +338,5 @@ ai-helpdesk-triage-agent/
 Distribuido bajo **MIT License** — ver [`LICENSE`](LICENSE).
 
 - Autor y copyright: **Lucas Giurastante** — `yurastantelucas@gmail.com`
-- Contexto del repositorio: demo técnica preparada para la vacante de *Senior IT Support
-  Engineer – AI & Help Desk Automation* (RH VISION).
+- Propósito: demo de portfolio sobre automatización segura del soporte IT.
 - Guion de entrevista: [`docs/INTERVIEW_PLAYBOOK.md`](docs/INTERVIEW_PLAYBOOK.md).

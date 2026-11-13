@@ -310,14 +310,14 @@ class EntityTests(unittest.TestCase):
         result = service.extract_entities(
             _ticket(
                 description="Carlos me dijo que carlos.ruiz y ana.silva lo saben, "
-                "escriban a carlos.ruiz@rhvision.com.ar"
+                "escriban a carlos.ruiz@example.com"
             ),
             [],
         )
         self.assertEqual(result["user"], "juan.perez")
         self.assertIn("carlos.ruiz", result["mentioned_users"])
         self.assertIn("ana.silva", result["mentioned_users"])
-        self.assertEqual(result["email"], "carlos.ruiz@rhvision.com.ar")
+        self.assertEqual(result["email"], "carlos.ruiz@example.com")
 
     def test_app_uses_the_ticket_service_when_known(self):
         service = _service()

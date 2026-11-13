@@ -12,7 +12,7 @@
     "mfa_enrolled": true,
     "identity_verified": true,
     "password_last_set_days": 12,
-    "email": "juan.perez@rhvision.com.ar",
+    "email": "juan.perez@example.com",
     "display_name": "Juan Pérez",
     "department": "Ventas"
   },
@@ -29,7 +29,7 @@
     "mfa_enrolled": true,
     "identity_verified": true,
     "password_last_set_days": 25,
-    "email": "laura.gomez@rhvision.com.ar",
+    "email": "laura.gomez@example.com",
     "display_name": "Laura Gómez",
     "department": "Ventas"
   },
@@ -47,7 +47,7 @@
     "mfa_enrolled": true,
     "identity_verified": true,
     "password_last_set_days": 40,
-    "email": "carlos.ruiz@rhvision.com.ar",
+    "email": "carlos.ruiz@example.com",
     "display_name": "Carlos Ruiz",
     "department": "TI"
   },
@@ -65,7 +65,7 @@
     "mfa_enrolled": true,
     "identity_verified": true,
     "password_last_set_days": 15,
-    "email": "maria.lopez@rhvision.com.ar",
+    "email": "maria.lopez@example.com",
     "display_name": "María López",
     "department": "Dirección"
   },
@@ -81,7 +81,7 @@
     "mfa_enrolled": true,
     "identity_verified": false,
     "password_last_set_days": 180,
-    "email": "pedro.gomez@rhvision.com.ar",
+    "email": "pedro.gomez@example.com",
     "display_name": "Pedro Gómez",
     "department": "Ventas"
   },
@@ -97,7 +97,7 @@
     "mfa_enrolled": true,
     "identity_verified": true,
     "password_last_set_days": 60,
-    "email": "ana.silva@rhvision.com.ar",
+    "email": "ana.silva@example.com",
     "display_name": "Ana Silva",
     "department": "Operaciones"
   },
@@ -114,7 +114,7 @@
     "mfa_enrolled": true,
     "identity_verified": true,
     "password_last_set_days": 95,
-    "email": "luis.martinez@rhvision.com.ar",
+    "email": "luis.martinez@example.com",
     "display_name": "Luis Martínez",
     "department": "Finanzas"
   },
@@ -130,7 +130,7 @@
     "mfa_enrolled": false,
     "identity_verified": false,
     "password_last_set_days": 30,
-    "email": "sofia.torres@rhvision.com.ar",
+    "email": "sofia.torres@example.com",
     "display_name": "Sofía Torres",
     "department": "Marketing"
   },
@@ -147,7 +147,7 @@
     "mfa_enrolled": true,
     "identity_verified": true,
     "password_last_set_days": 240,
-    "email": "diego.fernandez@rhvision.com.ar",
+    "email": "diego.fernandez@example.com",
     "display_name": "Diego Fernández",
     "department": "Finanzas"
   },
@@ -163,7 +163,7 @@
     "mfa_enrolled": true,
     "identity_verified": true,
     "password_last_set_days": 55,
-    "email": "rosa.martinez@rhvision.com.ar",
+    "email": "rosa.martinez@example.com",
     "display_name": "Rosa Martínez",
     "department": "Operaciones"
   },
@@ -179,7 +179,7 @@
     "mfa_enrolled": true,
     "identity_verified": false,
     "password_last_set_days": 70,
-    "email": "andres.lopez@rhvision.com.ar",
+    "email": "andres.lopez@example.com",
     "display_name": "Andrés López",
     "department": "Marketing"
   },
@@ -196,7 +196,7 @@
     "mfa_enrolled": true,
     "identity_verified": true,
     "password_last_set_days": 20,
-    "email": "vale.garcia@rhvision.com.ar",
+    "email": "vale.garcia@example.com",
     "display_name": "Valentina García",
     "department": "Ventas"
   }

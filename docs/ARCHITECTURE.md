@@ -145,8 +145,8 @@ sequenceDiagram
 ## 5. Performance y escalabilidad
 
 - **Costo por ticket:** O(n) en longitud de texto (normalización + matching lineal sobre
-  13 artículos). El ticket completo de 12 tickets corre en milisegundos
-  (`average_triage_latency_ms ≈ 0.5`).
+  13 artículos). El batch de ejemplo es pequeño; este repositorio no mantiene un
+  benchmark de rendimiento ni define un SLO.
 - **Estado:** el runtime es *stateless* entre corridas; el estado persistente son
   artefactos en `outputs/`. Un ticket se puede reprocesar sin efectos duplicados.
 - **Paralelismo:** el pipeline es embarrassingly parallel por ticket; el cuello de
@@ -165,9 +165,9 @@ sequenceDiagram
   con la KB, así que las métricas de `eval_report` miden consistencia interna del
   pipeline, no accuracy sobre tickets reales.** La métrica honesta de partida con datos
   de producción es el deflection rate y el FCR, no la accuracy de clasificación.
-- Los conectores reales están escritos y revisados, pero **no se ejecutaron contra un
-  tenant real** (no hay credenciales); su contrato está verificado por unit tests de
-  la capa de entrada, no de integración.
+- El código de los conectores está incluido, pero **no se ejecutó contra un tenant real**
+  (no hay credenciales). El repositorio incluye unit tests para el comportamiento de los
+  adaptadores; esos tests no sustituyen pruebas de integración en un sandbox.
 - `MockITSM` no persiste entre corridas y `MockApps` no ejecuta efectos reales: el
   write-back de la demo es en memoria.
 - La política es plana (un archivo de riesgo, uno de escalamiento): en producción haría

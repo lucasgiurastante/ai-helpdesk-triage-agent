@@ -1,19 +1,18 @@
 # Interview Playbook — AI Help Desk Triage & Remediation Agent
 
-> Paquete de preparación para la entrevista con **RH VISION** (Senior IT Support + IA).
+> Guía de preparación para entrevistas de automatización de Help Desk.
 > El documento está en español; **todo lo que se dice en voz alta está en inglés y está
 > marcado como `EN`**. Las respuestas de la Q&A están escritas para poder leerse tal cual.
 >
-> *Nota: verificá las cifras de las historias STAR contra tu CV real antes de la
-> entrevista; los números están puestos como referencia de estructura, no como dato
-> inventado en sala.*
+> *Nota: las historias STAR son plantillas. Completá cada una con una experiencia real y
+> confirmá las cifras antes de usarla en una entrevista.*
 
 ---
 
 ## 0. Pitch de 60 segundos (EN literal)
 
-> "RH VISION is hiring a Senior IT Support Engineer to automate the Help Desk with AI.
-> I built exactly that, and I built it the way I would build it for you.
+> "This project demonstrates how I approach safe Help Desk automation. I built a
+> working portfolio demo that makes its decisions explainable and auditable.
 >
 > This repository is a working triage-and-remediation agent: it classifies tickets, sets
 > the priority, validates the requester's identity, evaluates the risk of the proposed
@@ -25,9 +24,9 @@
 > IDs into an audit log.
 >
 > Everything runs on the standard library, with no LLM and no external calls, so the
-> demo is deterministic and reproducible. And I did not stop there: I wrote the real
-> ServiceNow, Jira, Microsoft Graph and Okta connectors behind an adapter pattern, so
-> moving from mock to production is a configuration change, not a rewrite."
+> demo is deterministic and reproducible. The repository also includes adapter
+> implementations for ServiceNow, Jira, Microsoft Graph and Okta. They have not been
+> exercised against live tenants."
 
 ---
 
@@ -49,7 +48,7 @@
 > "Short answer: this is a deliberate scope decision, not a limitation I hid.
 > Classification here is keyword and rule based, so every decision is reproducible: same
 > ticket, same article, same confidence, same risk, same approver — and I can prove it
-> with a labelled evaluation set and a hard gate in CI.
+> with a labelled evaluation set and an evaluation script with explicit thresholds.
 > I would not put an LLM in the decision path for something like 'disable this account'.
 > Where I *would* use one is summarising the ticket, drafting the reply, translating,
 > or suggesting knowledge base articles — and even there, the decision stays in the
@@ -59,7 +58,7 @@
 
 > "Good news: the demo does not need the network. The connectors are mocked in memory,
 > the classification is deterministic and the whole run is local. This is the same
-> property that lets me run the evaluation harness in CI. If you want to see the real
+> property that lets me run the evaluation harness offline. If you want to see the real
 > connector, I can show you the code path and the request it would build — it is the
 > same adapter interface, with a URL and an API token."
 
@@ -99,15 +98,12 @@
 > artefacts, and the `.env` file is git-ignored."
 
 **Q4. How do you measure that it works?**
-> "With a labelled evaluation set and a hard gate. Twenty-seven tickets were labelled
-> by hand with the expected category, priority, risk, action and decision. The harness
-> runs the real pipeline — triage, identity, policy — with no network and no side
-> effects, and reports accuracy per dimension, confusion matrices, and a breakdown by
-> category and by risk. Four thresholds are enforced: category 0.85, priority 0.80,
-> action 0.75, decision 0.80. If any of them fails, the script prints the failing
-> tickets and exits with code 1, and CI blocks the merge. The same set becomes a
-> regression suite: every change to the knowledge base or to the policy has to keep the
-> numbers."
+> "The evaluation set contains 28 synthetic labelled tickets. The harness runs the
+> pipeline offline and reports accuracy by category, priority, action and decision, as
+> well as confusion matrices and breakdowns. Four thresholds are checked: category
+> 0.85, priority 0.80, action 0.75 and decision 0.80. If one fails, the script exits
+> with code 1. This repository does not yet include CI automation, so I run the check
+> locally; a workflow can run it on every change."
 
 **Q5. How do you stop the agent from doing something destructive?**
 > "With four independent layers, and none of them is the model. First, the action
@@ -125,12 +121,11 @@
 > "Two reasons. First, an interview demo must be reproducible: mocks let me run it
 > anywhere, offline, with zero installs and zero risk of writing into someone's tenant.
 > Second, mocks are honest about what the demo proves — it proves the decision logic,
-> the guardrails and the evaluation, not my ability to paste an API key. The real
-> connectors are written anyway, behind the same interface, with the real endpoints,
-> timeouts and backoff. Switching is a configuration change: an environment variable
-> and credentials. And I would be explicit in the interview that the live paths were
-> reviewed and unit-tested but not executed against a tenant, because I had no
-> credentials."
+> the guardrails and the evaluation, not my ability to paste an API key. The repository
+> includes connector implementations behind the same interface, with endpoints,
+> timeouts and backoff. I have not exercised them against a live tenant. The repo also
+> includes unit tests for adapter behavior, but those do not replace live integration
+> validation with sandbox credentials."
 
 **Q7. How would you take this to production?**
 > "In phases, always with the human in the loop first. Phase one is shadow mode: the
@@ -139,8 +134,8 @@
 > the low-risk auto-execution path: knowledge base articles and password reset links,
 > still with the kill switch on. Phase three adds the approval workflow integrated with
 > the ITSM so approvers work from their normal queue. In parallel: the audit log goes
-> to the SIEM, metrics to Prometheus, and the evaluation set runs in CI on every
-> change. What I would not do is enable writes and hope — the rollout is progressive,
+> to the SIEM, metrics to Prometheus, and I would add CI to run the evaluation set on
+> every change. What I would not do is enable writes and hope — the rollout is progressive,
 > measured, and reversible."
 
 **Q8. What would you do in the first 30, 60 and 90 days?**
@@ -194,117 +189,92 @@
 
 ---
 
-## 3. Cinco historias STAR (ES + EN)
+## 3. Historias STAR (ES + EN)
 
-### STAR 1 — Incidente crítico (migración SAP Fiori)
+Usá estas plantillas para organizar experiencias reales. Los campos entre corchetes se
+completan antes de la entrevista. No agregues métricas, acciones ni resultados que no
+puedas respaldar.
 
-**ES** — *Situación:* durante la migración a SAP Fiori, un fallo de autenticación dejó a
-Finance sin poder cerrar el mes (312 usuarios bloqueados en 40 minutos). *Tarea:* ser el
-punto de contacto único con el negocio y con SAP Basis. *Acción:* implementé un plan de
-contención por oleadas, un único script de verificación de identidad con doble control
-para los casos de desbloqueo, y un tablero de estado por área con el impacto real.
-*Resultado:* el servicio se restableció en 75 minutos, 0 accesos indebidos y la
-remediación del patrón (doble verificación + ventana de mantenimiento) quedó como
-procedimiento estándar, reduciendo las recurrencias a cero en los 6 meses siguientes.
+### STAR 1 — Incidente crítico
 
-**EN** — *Situation:* during a SAP Fiori migration, an authentication failure left
-Finance unable to close the month — 312 users locked out within 40 minutes. *Task:* act
-as the single point of contact for the business and for SAP Basis. *Action:* I ran a
-wave-based containment plan, built a single identity verification script with a
-double-check for unlock operations, and published a per-area status board with real
-impact. *Result:* service restored in 75 minutes, zero unauthorised access, and the
-remediation pattern — double verification plus a maintenance window — became the
-standard procedure, with zero recurrences in the following six months.
+**ES — completar con un caso real**
 
-### STAR 2 — Proceso repetitivo automatizado (L1)
+- **Situación:** [servicio afectado, impacto y contexto del incidente].
+- **Tarea:** [tu responsabilidad concreta].
+- **Acción:** [cómo diagnosticás, priorizás, comunicás y escalás].
+- **Resultado:** [resultado verificable; agregá duración o volumen sólo si lo recordás].
 
-**ES** — *Situación:* el 60 % de los tickets diarios eran de cuatro tipos (contraseña
-vencida, cuenta bloqueada, permisos de carpeta, artículos de KB) y cada uno consumía
-entre 8 y 15 minutos de un analista. *Tarea:* reducir el tiempo de manejo sin perder
-control ni calidad. *Acción:* documenté el criterio real de decisión (no el ideal) de
-los analistas senior, lo convertí en reglas de política con umbrales explícitos, y
-automatizé el 90 % de esos cuatro flujos con aprobación humana para los casos de
-riesgo medio y alto. *Resultado:* el tiempo medio de manejo pasó de 11 a 4 minutos, la
-deflexión del Help Desk subió al 22 % y la tasa de reopening cayó un 35 %.
+**EN — template**
 
-**EN** — *Situation:* 60% of daily tickets were four repeat scenarios — expired
-passwords, locked accounts, folder permissions and knowledge base deflection — each
-consuming 8 to 15 minutes of an analyst. *Task:* cut handling time without losing
-control or quality. *Action:* I documented the real decision criteria of senior
-analysts, not the ideal ones, turned them into policy rules with explicit thresholds,
-and automated 90% of those four flows while keeping human approval for medium and
-high risk. *Result:* average handling time went from 11 to 4 minutes, Help Desk
-deflection reached 22%, and the reopen rate dropped by 35%.
+> "During [real incident], [service or users] were affected by [impact]. I was
+> responsible for [your role]. I [specific actions you took], coordinating with
+> [teams or stakeholders]. The outcome was [verifiable result]."
 
-### STAR 3 — Automatización con IA (con criterio)
+### STAR 2 — Mejora de un proceso de soporte
 
-**ES** — *Situación:* un equipo de soporte necesitaba clasificar y resumir tickets en
-dos idiomas, con un volumen de 1.200 tickets semanales. *Tarea:* probar si la IA
-aportaba valor sin introducir riesgo en decisiones de acceso. *Acción:* construí un
-prototipo de clasificación con un LLM **restringido a proponer**, con un clasificador
-determinista como segunda capa, un conjunto de 200 tickets etiquetados y un gate de
-precisión; las decisiones de identidad y permisos nunca pasaban por el modelo.
-*Resultado:* la IA sólo se usó para redactar y resumir, la clasificación mejoró 2,4
-puntos porcentuales y se lanzó con 0 incidentes de acceso indebido.
+**ES — completar con un caso real**
 
-**EN** — *Situation:* a support team needed to classify and summarise tickets in two
-languages, at 1,200 tickets per week. *Task:* find out whether AI added value without
-introducing risk into access decisions. *Action:* I built a classification prototype
-where the LLM was restricted to *proposing*, with a deterministic classifier as the
-second layer, a 200-ticket labelled set and a precision gate; identity and permission
-decisions never went through the model. *Result:* AI was kept only for drafting and
-summarising, classification error dropped by 2.4 percentage points, and we launched
-with zero unauthorised access incidents.
+- **Situación:** [tarea repetitiva o demora observada].
+- **Tarea:** [qué mejora te pidieron o propusiste].
+- **Acción:** [cambio aplicado: documentación, priorización, automatización o coordinación].
+- **Resultado:** [evidencia disponible: tiempo, volumen, calidad o feedback].
 
-### STAR 4 — Usuario difícil / VIP
+**EN — template**
 
-**ES** — *Situación:* un director de área pidió de inmediato un alta de permisos sobre un
-sistema financiero, con la justificación de que "en la empresa anterior lo tenía".
-*Tarea:* resolver la demanda real sin saltar el control de acceso. *Acción:* validé la
-identidad fuera de banda (llamada al secretaría, nunca por email), confirmé que el
-recurso era correcto y no otro, obtuve la aprobación escrita del owner del sistema
-financiero, apliqué el permiso **mínimo** necesario en lugar del juego completo que
-pedía, y documenté la excepción con su justificación y su fecha de revisión.
-*Resultado:* el director tenía su acceso en menos de 2 horas, con 3 permisos de los 11
-que pedía, y el caso quedó como excepción documentada y no como precedente. Ese caso
-es la razón de que hoy el riesgo suba un nivel cuando el solicitante es VIP: a los VIP
-se los trata con **más** cuidado, no con menos.
+> "I noticed [specific support process] was causing [observable problem]. I was asked
+> to [goal]. I [actions you personally took] and worked with [people or teams]. We saw
+> [verifiable outcome]."
 
-**EN** — *Situation:* an area director asked for immediate elevated permissions on a
-financial system, justified by "I had them in my previous company". *Task:* resolve the
-real need without bypassing the access control. *Action:* I verified the identity
-out-of-band — a call to the executive assistant, never by email — confirmed the target
-resource was the correct one, obtained written approval from the system owner, applied
-the **minimum** permission set instead of the full bundle requested, and documented the
-exception with its justification and review date. *Result:* the director had access in
-under 2 hours with 3 of the 11 permissions requested, and the case stayed a documented
-exception rather than a precedent. That case is exactly why the risk is raised for VIP
-requesters today: VIPs get **more** care, not less.
+### STAR 3 — Proyecto personal de automatización
 
-*(Nota: ajustá los nombres y las cifras al caso real de tu CV; la estructura —demanda
-legítima, proceso que no se salta, permiso mínimo, excepción documentada— es lo que
-convence en la entrevista.)*
+Esta historia describe el repositorio de portfolio; no representa un despliegue en una
+empresa ni una integración con un tenant real.
 
-### STAR 5 — Algo que salió mal y qué aprendí
+**ES** — *Situación:* quería demostrar cómo automatizar el triage de tickets manteniendo
+control humano sobre las acciones sensibles. *Tarea:* construir una demo local,
+reproducible y fácil de auditar. *Acción:* implementé clasificación determinista con una
+base de conocimiento, prioridad por impacto y urgencia, consulta de identidad, reglas de
+riesgo, aprobación o escalamiento, registro de auditoría y evaluación sobre tickets
+sintéticos. *Resultado:* el repositorio permite ejecutar el flujo offline; su set de
+28 tickets mide consistencia interna, no precisión sobre datos de producción.
 
-**ES** — *Situación:* automatizamos el envío de las notificaciones de aprobación por
-correo y, sin darme cuenta, el proceso incluía el cuerpo del ticket en el mensaje.
-*Tarea:* corregirlo sin perder trazabilidad. *Acción:* reconstruí el flujo separando
-datos de control (ticket, acción, rol) de datos no confiables (texto del usuario),
-sustituí la interpolación por un plantilla con campos acotados, y añadí una prueba
-regresiva con un ticket que contiene instrucciones adversariales. *Resultado:* el
-vulnerabilidad quedó cerrada, la plantilla pasó a ser la única forma de generar
-notificaciones, y el equipo adoptó la regla: "el texto del usuario es dato, nunca
-instrucción".
+**EN**
 
-**EN** — *Situation:* we automated the approval notifications by email and,
-unnoticed, the process included the ticket body in the message. *Task:* fix it without
-losing traceability. *Action:* I rebuilt the flow separating control data — ticket,
-action, approver role — from untrusted data, replaced string interpolation with a
-field-limited template, and added a regression test with a ticket containing
-adversarial instructions. *Result:* the vulnerability was closed, the template became
-the only way notifications are generated, and the team adopted the rule: "user text is
-data, never an instruction".
+> "I built this as a personal portfolio project to demonstrate safe Help Desk
+> automation. The demo uses deterministic triage, a local knowledge base, identity
+> checks, risk policies, human approval or escalation, and an audit log. I evaluated it
+> with 28 synthetic labelled tickets. That result measures internal consistency, not
+> production accuracy, and the connectors have not been tested against live tenants."
+
+### STAR 4 — Usuario difícil o solicitud urgente
+
+**ES — completar con un caso real**
+
+- **Situación:** [necesidad del usuario y por qué era urgente o difícil].
+- **Tarea:** [qué debías resolver y qué controles aplicar].
+- **Acción:** [cómo aclaraste la necesidad, comunicaste límites y diste seguimiento].
+- **Resultado:** [resolución o aprendizaje que puedas confirmar].
+
+**EN — template**
+
+> "A user needed [specific outcome] under [constraint]. I had to [responsibility]. I
+> clarified [need or risk], explained [process or options], and coordinated with
+> [stakeholders]. The result was [verifiable outcome]."
+
+### STAR 5 — Error o aprendizaje
+
+**ES — completar con un caso real**
+
+- **Situación:** [error, incidente o decisión que no salió como esperabas].
+- **Tarea:** [tu responsabilidad para corregirlo].
+- **Acción:** [cómo mitigaste el impacto y qué cambiaste].
+- **Resultado:** [qué mejoró o qué harías distinto; sin atribuir cambios al equipo si no ocurrió].
+
+**EN — template**
+
+> "I made a mistake when [real situation]. I was responsible for [your role]. I first
+> [mitigation], then [change or lesson]. Since then, I [specific practice adopted], and
+> the outcome was [verifiable result]."
 
 ---
 
@@ -375,7 +345,7 @@ real; con tickets de producción el número baja y lo mediría igual.
 
 | Fase | EN | ES |
 |---|---|---|
-| **0–30** | "Listen and measure. Meet the analysts, extract their real decision criteria, map the categories and the escalation paths, and establish the baseline: volume, handling time, deflection potential. I also land the evaluation harness in CI from day one, so every later change is measurable." | Escuchar y medir. Reunirme con los analistas, extraer sus criterios reales de decisión, mapear categorías y rutas de escalamiento, y establecer la línea base: volumen, tiempo de manejo, potencial de deflexión. Dejo el harness de evaluación en CI desde el día uno. |
+| **0–30** | "Listen and measure. Meet the analysts, extract their real decision criteria, map the categories and the escalation paths, and establish the baseline: volume, handling time, deflection potential. I would add the evaluation harness to CI early, so every later change is measurable." | Escuchar y medir. Reunirme con los analistas, extraer sus criterios reales de decisión, mapear categorías y rutas de escalamiento, y establecer la línea base: volumen, tiempo de manejo, potencial de deflexión. Propondría automatizar la evaluación en CI durante esta fase. |
 | **30–60** | "Shadow mode. The agent classifies and recommends in production but executes nothing. We measure agreement with the human decision, per category, and we tune the knowledge base and thresholds against real data." | Modo sombra. El agente clasifica y recomienda en producción, pero no ejecuta nada. Medimos el agreement con la decisión humana por categoría y ajustamos KB y umbrales con datos reales. |
 | **60–90** | "Open the safe path. Enable auto-execution only for low-risk actions with high confidence, integrate the approval queue into the ITSM so approvers work from their own queue, and publish the first dashboard: deflection rate, MTTR and approval turnaround against the baseline." | Abrir el camino seguro. Auto-ejecución sólo para acciones de riesgo bajo con confianza alta, integración de la cola de aprobaciones con el ITSM y primer tablero: deflexión, MTTR y tiempo de aprobación contra la línea base. |
 
