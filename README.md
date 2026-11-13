@@ -101,6 +101,34 @@ make help
 `python3 -m unittest discover -s tests -t . -v` corre la suite completa sin instalar
 nada: `requirements.txt` está íntegramente comentado a propósito.
 
+### UI opcional para mostrar la demo
+
+El motor y el CLI siguen usando sólo la biblioteca estándar. Para una presentación
+visual hay una app Streamlit opcional en `ui/app.py`; siempre ejecuta los adaptadores
+mock en `dry-run`, guarda sus artefactos en una carpeta temporal y no necesita secretos.
+Los botones de aprobación de la interfaz son sólo una simulación visual.
+
+Para correrla localmente:
+
+```bash
+python3 -m venv .venv-ui
+source .venv-ui/bin/activate
+python -m pip install -r ui/requirements.txt
+python -m streamlit run ui/app.py
+```
+
+#### Publicar la UI con Streamlit Community Cloud
+
+1. Subí este repositorio a GitHub con visibilidad pública.
+2. En [Streamlit Community Cloud](https://share.streamlit.io/), elegí **Create app**.
+3. Seleccioná el repositorio, la rama `main` y `ui/app.py` como entrypoint.
+4. Community Cloud encuentra `ui/requirements.txt` junto al entrypoint e instala
+   Streamlit. No configures secretos: esta app funciona sólo con datos sintéticos y mocks.
+
+La app usa `.streamlit/config.toml` desde la raíz del repo para el tema visual. Consultá
+la [guía oficial de despliegue](https://docs.streamlit.io/deploy/streamlit-community-cloud/deploy-your-app)
+si cambia el flujo de Community Cloud.
+
 Artefactos que deja la corrida:
 
 ```
