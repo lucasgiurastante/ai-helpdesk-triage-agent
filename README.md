@@ -368,3 +368,19 @@ Distribuido bajo **MIT License** — ver [`LICENSE`](LICENSE).
 - Autor y copyright: **Lucas Giurastante** — `yurastantelucas@gmail.com`
 - Propósito: demo de portfolio sobre automatización segura del soporte IT.
 - Guion de entrevista: [`docs/INTERVIEW_PLAYBOOK.md`](docs/INTERVIEW_PLAYBOOK.md).
+
+## Laboratorio agentic (Fase 00+)
+
+La evolución hacia un agente agentic vive en `api/` y `lab/`, separada del motor original.
+
+- `config.py` — configuración central (mock/live).
+- `requirements-lab.txt` — dependencias opcionales (`pip install -r requirements-lab.txt`).
+- `api/` — backend HTTP (FastAPI). `GET /health`, `POST /triage`.
+- `lab/` — LLM, RAG, orquestación, webhooks, voz (en progreso).
+
+Correr la API (con deps instaladas):
+```bash
+make api-run   # o: .venv-ui/bin/python -m uvicorn api.main:app --reload
+```
+
+Progreso detallado: [`docs/PROGRESS.md`](docs/PROGRESS.md). Fronteras: [`docs/LAB_BOUNDARIES.md`](docs/LAB_BOUNDARIES.md).

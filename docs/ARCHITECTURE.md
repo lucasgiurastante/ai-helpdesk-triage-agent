@@ -176,3 +176,17 @@ sequenceDiagram
 - El patrón de "2º ticket del mismo servicio en el lote ⇒ impacto de equipo" es
   heurístico y depende del orden del lote: en producción el impacto debería venir del
   catálogo de servicios y del grafo de dependencias, no del batch.
+
+
+## 7. Laboratorio agentic (Fase 00+)
+
+La evolución hacia un agente agentic vive en `api/` y `lab/`, separada del motor original.
+Ver `docs/LAB_BOUNDARIES.md` para la tabla de fronteras y reglas.
+
+- `config.py` — configuración central (mock/live), fuente única de verdad.
+- `requirements-lab.txt` — dependencias opcionales del laboratorio.
+- `api/` — backend HTTP (FastAPI) que expone el motor original como servicio.
+- `lab/` — LLM, RAG, orquestación, webhooks, voz.
+
+El motor original (`agent.py`, `services/`, `policies/`, `adapters/`) se consume como librería;
+no se duplican políticas ni se reescribe la lógica.

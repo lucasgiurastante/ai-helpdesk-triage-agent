@@ -1,0 +1,33 @@
+# Laboratorio agentic — dependencias OPCIONALES.
+#
+# El núcleo (agent.py, services/, policies/, data/, eval/, tests/) sigue usando
+# SOLO la biblioteca estándar. Este archivo instala las dependencias del
+# laboratorio (api/, lab/) y NO es necesario para correr el demo base.
+#
+#   pip install -r requirements-lab.txt
+#
+# Cada dependencia se importa con guardas (try/except ImportError) en los
+# módulos que la usan, de modo que el demo base funciona sin ellas.
+
+# --- API HTTP ---
+fastapi>=0.110.0
+uvicorn[standard]>=0.27.0
+pydantic>=2.5.0
+
+# --- LLM ---
+openai>=1.12.0
+anthropic>=0.18.0
+
+# --- RAG ---
+chromadb>=0.4.22
+# sentence-transformers>=2.3.0   # opcional, para embeddings locales
+
+# --- Orquestación ---
+langgraph>=0.0.26
+langchain-core>=0.1.27
+
+# --- UI conversacional ---
+streamlit>=1.31.0
+
+# --- Utilidades ---
+python-dotenv>=1.0.0

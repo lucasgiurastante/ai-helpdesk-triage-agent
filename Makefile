@@ -18,9 +18,16 @@ help: ## Show this help
 	@echo "harness only use the Python standard library (Python 3.9+)."
 
 compile: ## Byte-compile every module (syntax check, zero installs)
-	$(PYTHON) -m compileall -q agent.py adapters services eval tests
+	$(PYTHON) -m compileall -q agent.py adapters services eval tests config.py api lab
 
 lint: compile ## Syntax check (no external linter is required)
+
+# --- Laboratorio agentic (Fase 00+) ---
+api-check: ## Verifica que la API del laboratorio importa (sin deps opcionales)
+	$(PYTHON) -c "import config; print('config OK:', config.get_config())"
+
+api-run: ## Corre la API del laboratorio (requiere requirements-lab.txt)
+	.venv-ui/bin/python -m uvicorn api.main:app --host 127.0.0.1 --port 8000 --reload
 
 test: ## Run the full unit test suite
 	$(PYTHON) -m unittest discover -s tests -t . -v
